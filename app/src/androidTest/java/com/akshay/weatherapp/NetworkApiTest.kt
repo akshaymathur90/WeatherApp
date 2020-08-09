@@ -11,12 +11,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class NetworkApiTest {
 
-    @Inject
     lateinit var apiInterface: OpenWeatherApiInterface
     private val baseUrl = "https://api.openweathermap.org/data/2.5/"
 

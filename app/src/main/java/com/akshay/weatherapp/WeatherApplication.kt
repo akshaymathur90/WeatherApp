@@ -1,4 +1,12 @@
 package com.akshay.weatherapp
 
-class WeatherApplication {
+import android.app.Application
+import com.facebook.stetho.Stetho
+
+class WeatherApplication: Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        Stetho.initializeWithDefaults(this)
+    }
 }

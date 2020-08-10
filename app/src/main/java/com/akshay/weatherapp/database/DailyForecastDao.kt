@@ -9,6 +9,9 @@ interface DailyForecastDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(dailyForecast: DailyForecast)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(dailyForecasts: List<DailyForecast>)
+
     @Update
     fun update(dailyForecast: DailyForecast)
 

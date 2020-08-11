@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akshay.weatherapp.R
 import com.akshay.weatherapp.WeatherApplication
+import com.akshay.weatherapp.database.DailyForecast
 import com.akshay.weatherapp.models.Location
+import com.akshay.weatherapp.ui.MainActivity
+import com.akshay.weatherapp.utils.ItemClickSupport
 import kotlinx.android.synthetic.main.fragment_weekly_forecast.*
 import javax.inject.Inject
 
@@ -26,15 +29,22 @@ class WeeklyForecastFragment : Fragment() {
         }
     }
 
+    interface ForecastItemClickListener {
+        fun onItemClick(forecast: DailyForecast)
+    }
     @Inject
     lateinit var weeklyForecastViewModelFactory: WeeklyForecastViewModel.Factory
 
+    private var listener: ForecastItemClickListener? = null
     private lateinit var adapter: WeeklyForecastAdapter
     private lateinit var viewModel: WeeklyForecastViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (context.applicationContext as WeatherApplication).appComponent.inject(this)
+        if (context is MainActivity) {
+            listener = context as ForecastItemClickListener
+        }
     }
 
     override fun onCreateView(
@@ -56,13 +66,15 @@ class WeeklyForecastFragment : Fragment() {
     }
 
     private fun init() {
-        val adapter = WeeklyForecastAdapter()
+        adapter = WeeklyForecastAdapter()
         forecast_list.layoutManager = LinearLayoutManager(activity)
         forecast_list.adapter = adapter
 
         val itemDecoration: RecyclerView.ItemDecoration =
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         forecast_list.addItemDecoration(itemDecoration)
+
+        ItemClickSupport.addTo(forecast_list).setOnItemClickListener { _, position, _ -> listener?.onItemClick(adapter.forecasts[position]) }
 
         viewModel.dailyForecasts.observe(viewLifecycleOwner, Observer { forecasts ->
             adapter.forecasts = forecasts

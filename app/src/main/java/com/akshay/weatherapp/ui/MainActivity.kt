@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.akshay.weatherapp.R
 import com.akshay.weatherapp.WeatherApplication
+import com.akshay.weatherapp.database.DailyForecast
 import com.akshay.weatherapp.models.Forecast
 import com.akshay.weatherapp.network.OpenWeatherApiInterface
+import com.akshay.weatherapp.ui.forecastdetail.ForecastDetailFragment
 import com.akshay.weatherapp.ui.weeklyforecast.WeeklyForecastFragment
 import com.akshay.weatherapp.ui.weeklyforecast.WeeklyForecastViewModel
 import retrofit2.Call
@@ -15,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), WeeklyForecastFragment.ForecastItemClickListener {
 
     @Inject
     lateinit var openWeatherApiInterface: OpenWeatherApiInterface
@@ -49,5 +51,10 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.content, fragment, tag)
             .addToBackStack(tag)
             .commit()
+    }
+
+    override fun onItemClick(forecast: DailyForecast) {
+        val forecastDetailFragment = ForecastDetailFragment.newInstance(forecast)
+        showFragment(forecastDetailFragment, ForecastDetailFragment.TAG)
     }
 }

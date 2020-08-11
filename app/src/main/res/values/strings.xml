@@ -4,4 +4,10 @@
     <string name="date_placeholder">Date</string>
     <string name="min_temp_placeholder">min</string>
     <string name="max_temp_placeholder">max</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure_format_string">%s hPa</string>
+    <string name="humidity_format_string">%s %%</string>
 </resources>

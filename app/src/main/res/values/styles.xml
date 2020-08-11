@@ -33,6 +33,10 @@
         <item name="android:textColor">@color/min_temp_color</item>
     </style>
 
-
-
+    <style name="ForecastParameterStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/forecast_param_text_size</item>
+        <item name="android:padding">@dimen/forecast_param_text_padding</item>
+    </style>
 </resources>

@@ -4,4 +4,6 @@
     <dimen name="title_text_padding">8dp</dimen>
     <dimen name="forecast_item_date_text_size">15sp</dimen>
     <dimen name="forecast_item_date_text_padding">16dp</dimen>
+    <dimen name="forecast_param_text_size">15sp</dimen>
+    <dimen name="forecast_param_text_padding">16dp</dimen>
 </resources>

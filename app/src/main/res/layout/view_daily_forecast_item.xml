@@ -8,24 +8,21 @@
 
     <TextView
         android:id="@+id/tv_forecast_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ForecastItemDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/date_placeholder" />
 
     <TextView
         android:id="@+id/tv_min_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ForecastItemMinTempStyle"
         tools:text="@string/min_temp_placeholder"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/tv_max_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ForecastItemMaxTempStyle"
         android:layout_marginEnd="8dp"
         tools:text="@string/max_temp_placeholder"
         app:layout_constraintTop_toTopOf="parent"

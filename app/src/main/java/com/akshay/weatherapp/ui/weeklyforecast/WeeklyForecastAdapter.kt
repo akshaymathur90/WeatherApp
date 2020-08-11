@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.akshay.weatherapp.R
 import com.akshay.weatherapp.database.DailyForecast
 import com.akshay.weatherapp.utils.Utils
+import kotlin.math.ceil
 
 class WeeklyForecastAdapter : RecyclerView.Adapter<WeeklyForecastAdapter.ViewHolder>() {
 
@@ -34,8 +35,8 @@ class WeeklyForecastAdapter : RecyclerView.Adapter<WeeklyForecastAdapter.ViewHol
         fun bind(forecast: DailyForecast) {
             val localDateTime = Utils.convertToLocalTime(forecast.timestamp, forecast.timezone)
             tvDate.text = Utils.formatDateTime(localDateTime)
-            tvMin.text = forecast.temp_min.toString()
-            tvMax.text = forecast.temp_max.toString()
+            tvMin.text = ceil(forecast.temp_min).toInt().toString()
+            tvMax.text = ceil(forecast.temp_max).toInt().toString()
         }
     }
 }

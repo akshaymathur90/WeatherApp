@@ -7,4 +7,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ScreenTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/screen_title_text_size</item>
+        <item name="android:padding">@dimen/title_text_padding</item>
+    </style>
+
+    <style name="ScreenSubtext" parent="ScreenTitle">
+        <item name="android:textSize">@dimen/screen_subtitle_text_size</item>
+    </style>
+
+    <style name="ForecastItemDate">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/forecast_item_date_text_size</item>
+        <item name="android:padding">@dimen/forecast_item_date_text_padding</item>
+    </style>
+
+    <style name="ForecastItemMaxTempStyle" parent="ForecastItemDate">
+        <item name="android:textColor">@color/max_temp_color</item>"
+    </style>
+
+    <style name="ForecastItemMinTempStyle" parent="ForecastItemDate">
+        <item name="android:textColor">@color/min_temp_color</item>
+    </style>
+
+
+
 </resources>

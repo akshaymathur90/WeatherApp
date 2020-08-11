@@ -25,8 +25,9 @@ fun Forecast.toDatabaseModel(): List<DailyForecast> {
     val dbDailyForecastList = mutableListOf<DailyForecast>()
     val sortedDailyForecast = daily.sortedBy { it.dt }
 
-    sortedDailyForecast.forEach { dayForecast ->
+    sortedDailyForecast.forEachIndexed { idx, dayForecast ->
         val dbDailyForecast = DailyForecast(
+            idx,
             dayForecast.dt.times(1000),
             timezone,
             timezone_offset,

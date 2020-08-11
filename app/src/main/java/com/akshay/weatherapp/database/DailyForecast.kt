@@ -9,7 +9,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "daily_forecasts")
 data class DailyForecast(
-    @PrimaryKey val timestamp: Long,
+    @PrimaryKey val forecastId: Int,
+    @ColumnInfo(name = "timestamp") val timestamp: Long,
     @ColumnInfo(name = "timezone") val timezone: String,
     @ColumnInfo(name = "timezone_offset") val timezone_offset: Long,
     @ColumnInfo(name = "sunrise") val sunrise: Long,

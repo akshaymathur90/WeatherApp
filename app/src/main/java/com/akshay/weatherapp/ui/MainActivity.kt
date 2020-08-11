@@ -47,6 +47,12 @@ class MainActivity : AppCompatActivity(), WeeklyForecastFragment.ForecastItemCli
     }
 
     private fun showFragment(fragment: Fragment, tag: String) {
+        val existingFragment = supportFragmentManager.findFragmentByTag(tag)
+
+        if (existingFragment != null && existingFragment.isAdded) {
+            return
+        }
+
         supportFragmentManager.beginTransaction()
             .add(R.id.content, fragment, tag)
             .addToBackStack(tag)

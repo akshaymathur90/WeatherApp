@@ -27,7 +27,7 @@ fun Forecast.toDatabaseModel(): List<DailyForecast> {
 
     sortedDailyForecast.forEach { dayForecast ->
         val dbDailyForecast = DailyForecast(
-            dayForecast.dt,
+            dayForecast.dt.times(1000),
             timezone,
             timezone_offset,
             dayForecast.sunrise,

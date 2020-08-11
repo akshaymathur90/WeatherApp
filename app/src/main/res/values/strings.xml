@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="weekly_forecast">Your Weekly Forecast</string>
+    <string name="date_placeholder">Date</string>
+    <string name="min_temp_placeholder">min</string>
+    <string name="max_temp_placeholder">max</string>
 </resources>

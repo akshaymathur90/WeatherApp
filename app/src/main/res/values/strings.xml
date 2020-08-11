@@ -10,4 +10,6 @@
     <string name="humidity">Humidity</string>
     <string name="pressure_format_string">%s hPa</string>
     <string name="humidity_format_string">%s %%</string>
+    <string name="error_network">Network Error</string>
+    <string name="error_something_went_wrong">Something went wrong</string>
 </resources>

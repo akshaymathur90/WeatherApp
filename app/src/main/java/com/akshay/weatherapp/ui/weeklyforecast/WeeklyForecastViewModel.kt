@@ -1,9 +1,8 @@
 package com.akshay.weatherapp.ui.weeklyforecast
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.akshay.weatherapp.models.Errors
 import com.akshay.weatherapp.models.Location
 import com.akshay.weatherapp.repositories.DailyForecastRepository
 import kotlinx.coroutines.launch
@@ -15,6 +14,14 @@ class WeeklyForecastViewModel(private val forecastRepository: DailyForecastRepos
     ViewModel() {
 
     val dailyForecasts = forecastRepository.forecasts
+
+    private var _eventNetworkError = MutableLiveData<Errors>()
+    val eventNetworkError: LiveData<Errors>
+        get() = _eventNetworkError
+
+    private var _isNetworkErrorShown = MutableLiveData<Boolean>()
+    val isNetworkErrorShown: LiveData<Boolean>
+        get() = _isNetworkErrorShown
 
     companion object {
         private const val TAG = "WeeklyForecastViewModel"
@@ -31,13 +38,22 @@ class WeeklyForecastViewModel(private val forecastRepository: DailyForecastRepos
         viewModelScope.launch {
             try {
                 forecastRepository.refreshForecast(location)
+                _isNetworkErrorShown.value = false
+                _eventNetworkError.value = null
             } catch (networkException: IOException) {
-                //TODO: show error to UI
+                if (dailyForecasts.value.isNullOrEmpty()) {
+                    _eventNetworkError.value = Errors.NETWORK_ERROR
+                }
                 Log.e(TAG, Log.getStackTraceString(networkException))
             } catch (ex: Exception) {
                 Log.e(TAG, Log.getStackTraceString(ex))
+                _eventNetworkError.value = Errors.UNKNOWN_ERROR
             }
 
         }
+    }
+
+    fun onNetworkErrorShown() {
+        _isNetworkErrorShown.value = true
     }
 }

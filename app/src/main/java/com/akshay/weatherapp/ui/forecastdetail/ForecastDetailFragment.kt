@@ -49,7 +49,7 @@ class ForecastDetailFragment : Fragment() {
     private fun displayForecast(forecast: DailyForecast) {
         tvTitle.text =
             Utils.formatDateTime(Utils.convertToLocalTime(forecast.timestamp, forecast.timezone))
-        
+
         tvSunriseTime.text =
             Utils.formatTime(Utils.convertToLocalTime(forecast.sunrise, forecast.timezone))
 

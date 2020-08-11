@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.akshay.weatherapp.R
 import com.akshay.weatherapp.WeatherApplication
 import com.akshay.weatherapp.database.DailyForecast
+import com.akshay.weatherapp.models.Errors
 import com.akshay.weatherapp.models.Location
 import com.akshay.weatherapp.ui.MainActivity
 import com.akshay.weatherapp.utils.ItemClickSupport
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_weekly_forecast.*
 import javax.inject.Inject
 
@@ -32,6 +34,7 @@ class WeeklyForecastFragment : Fragment() {
     interface ForecastItemClickListener {
         fun onItemClick(forecast: DailyForecast)
     }
+
     @Inject
     lateinit var weeklyForecastViewModelFactory: WeeklyForecastViewModel.Factory
 
@@ -43,7 +46,7 @@ class WeeklyForecastFragment : Fragment() {
         super.onAttach(context)
         (context.applicationContext as WeatherApplication).appComponent.inject(this)
         if (context is MainActivity) {
-            listener = context as ForecastItemClickListener
+            listener = context
         }
     }
 
@@ -74,15 +77,50 @@ class WeeklyForecastFragment : Fragment() {
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         forecast_list.addItemDecoration(itemDecoration)
 
-        ItemClickSupport.addTo(forecast_list).setOnItemClickListener { _, position, _ -> listener?.onItemClick(adapter.forecasts[position]) }
+        ItemClickSupport.addTo(forecast_list)
+            .setOnItemClickListener { _, position, _ -> listener?.onItemClick(adapter.forecasts[position]) }
 
         viewModel.dailyForecasts.observe(viewLifecycleOwner, Observer { forecasts ->
             adapter.forecasts = forecasts
             adapter.notifyDataSetChanged()
         })
 
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                handleErrors(it)
+            }
+        })
+
+        //TODO: use Location Services to pull current location
         viewModel.refreshForecasts(Location(37.335205, -121.881222))
     }
 
+    private fun showNetworkError() {
+        val isErrorShown = viewModel.isNetworkErrorShown.value?:true
+        if (isErrorShown) {
+            showErrorMsg(getString(R.string.error_network))
+            viewModel.onNetworkErrorShown()
+        }
+    }
+
+    private fun handleErrors(error: Errors) {
+        when(error) {
+            Errors.NETWORK_ERROR -> showNetworkError()
+            Errors.UNKNOWN_ERROR -> showGenericError()
+        }
+    }
+
+    private fun showGenericError() {
+        val isErrorShown = viewModel.isNetworkErrorShown.value?:true
+        if (isErrorShown) {
+            showErrorMsg(getString(R.string.error_something_went_wrong))
+            viewModel.onNetworkErrorShown()
+        }
+    }
+
+    private fun showErrorMsg(msg: String) {
+        Snackbar.make(forecast_list, msg, Snackbar.LENGTH_LONG)
+            .show()
+    }
 
 }

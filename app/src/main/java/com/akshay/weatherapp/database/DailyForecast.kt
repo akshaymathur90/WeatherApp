@@ -1,9 +1,12 @@
 package com.akshay.weatherapp.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "daily_forecasts")
 data class DailyForecast(
     @PrimaryKey val timestamp: Long,
@@ -15,4 +18,4 @@ data class DailyForecast(
     @ColumnInfo(name = "humidity") val humidity: Float,
     @ColumnInfo(name = "temp_min") val temp_min: Float,
     @ColumnInfo(name = "temp_max") val temp_max: Float
-)
+): Parcelable

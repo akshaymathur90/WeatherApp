@@ -17,5 +17,10 @@ class Utils {
             val formatter = DateTimeFormat.forPattern("E dd MMM")
             return dateTime.toString(formatter)
         }
+
+        fun formatTime(dateTime: DateTime):String {
+            val formatter = DateTimeFormat.forPattern("hh:mm a")
+            return dateTime.toString(formatter)
+        }
     }
 }

@@ -5,6 +5,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.akshay.weatherapp.network.OpenWeatherApiInterface
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -25,6 +27,7 @@ class NetworkApiTest {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .baseUrl(baseUrl)
             .build()
 
@@ -32,17 +35,20 @@ class NetworkApiTest {
     }
 
     @Test
-    suspend fun testApiCall() {
+    fun testApiCall() {
         val qMap = mapOf(
             "lat" to "33.44",
             "lon" to "-94.037689",
             "appid" to "aaf3b45b1177933f4f78bc631caf557f"
         )
-        val forecast = apiInterface.getForecast(qMap).await()
+        runBlocking {
+            val forecast = apiInterface.getForecast(qMap).await()
 
-        Assert.assertNotNull(forecast)
-        Assert.assertNotNull(forecast.daily)
-        Assert.assertEquals(8, forecast.daily.size)
+            Assert.assertNotNull(forecast)
+            Assert.assertNotNull(forecast.daily)
+            Assert.assertEquals(8, forecast.daily.size)
+        }
+
 
 
     }

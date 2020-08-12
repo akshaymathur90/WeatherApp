@@ -32,19 +32,17 @@ class NetworkApiTest {
     }
 
     @Test
-    fun testApiCall() {
+    suspend fun testApiCall() {
         val qMap = mapOf(
             "lat" to "33.44",
             "lon" to "-94.037689",
             "appid" to "aaf3b45b1177933f4f78bc631caf557f"
         )
-        val response = apiInterface.getForecast(qMap).execute()
-        Assert.assertEquals(200, response.code())
+        val forecast = apiInterface.getForecast(qMap).await()
 
-        val forecast = response.body()
         Assert.assertNotNull(forecast)
-        Assert.assertNotNull(forecast?.daily)
-        Assert.assertEquals(8, forecast?.daily?.size)
+        Assert.assertNotNull(forecast.daily)
+        Assert.assertEquals(8, forecast.daily.size)
 
 
     }

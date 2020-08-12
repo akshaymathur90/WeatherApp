@@ -42,6 +42,7 @@ class WeatherDatabaseTest {
     fun insertAndGetForecast() {
         val quote = DailyForecast(
             1,
+            123456,
             "America/Chicago",
             -18000,
             1596972887,
@@ -53,7 +54,7 @@ class WeatherDatabaseTest {
         )
 
         dao.insert(quote)
-        val forecast = dao.getForecast(1)
+        val forecast = dao.getForecast(123456)
 
         Assert.assertEquals(true, forecast != null)
         Assert.assertEquals(1597021708L, forecast?.sunset)

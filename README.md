@@ -22,3 +22,7 @@ Time Spent: **8** hours
 3. Locate the project on disk and select the root level build.gradle file.
 4. Click Open.
 5. Clean and Rebuild the project.
+
+## Futher Improvements
+1. Use locations services to get User's current location for weather forecast.
+2. Add pull-to-refresh to fetch latest forecast data.
